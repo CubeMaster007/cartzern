@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% writeLaTeX Example: Academic Paper Template
+%
+% Source: http://www.writelatex.com
+% 
+% Feel free to distribute this example, but please keep the referral
+% to writelatex.com
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% How to use writeLaTeX: 
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+% If you're new to LaTeX, the wikibook is a great place to start:
+% http://en.wikibooks.org/wiki/LaTeX
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[twocolumn,showpacs,%
+  nofootinbib,aps,superscriptaddress,%
+  eqsecnum,prd,notitlepage,showkeys,10pt]{article}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{hyperref}
+
+\newcommand{\sincos}{\resizebox!{1em}{\(\begin{array}c\cos\vspace{-1ex}\\\sin\end{array}\)}\hspace{-.5ex}}
+
+\begin{document}
+
+\title{Cartesian Zernike Polynomials}
+\author{Adam Mendenhall}
+
+\begin{abstract}
+We derive formulae for the Zernike polynomials with cartesian coordinate arguments, without the use of trigenometric functions.  In many computing applications, the input coordinates are cartesian to begin with.  In these circumstances it is very undesirable to compute the polar representation and then evaluate the Zernike polynomial.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+
+The Zernike polynomials are a set of scalar valued functions defined on the unit circle.  The set is orthogonal with respect to the standard metric
+\[\langle f,g\rangle=\frac1\pi\int_0^1\int_0^{2\pi}f(r,\theta)g(r,\theta)\;\mathrm d\theta\mathrm dr.\]
+Most indexing schemes define a unique polynomial for each index tuple $(n,m)$ with $n\in\mathbb N$ and $m\in\mathbb Z$ with $|n|\leq m$ and $n\equiv m\pmod2$.  For a given $(n,m)$, we define the Zernike polynomial
+\[Z_n^m(r,\theta)=\left\{\begin{array}{cl}R_n^m(r)\cos m\theta&\text{if }m>0\\R_n^{-m}(r)\sin m\theta&\text{if }m<0\\R_n^0(r)&\text{if }m=0\end{array}\right.\]
+where the radial polynomials $R_n^m$ are defined for $n,m\geq0$ as 
+\[R_n^m(r)=\sum_{k=0}^{\frac{n-m}2}(-1)^k\binom{n-k}k\binom{n-2k}{\frac{n-m}2-k}r^{n-2k}.\]
+The radial polynomials are also defined recursively with $R_n^n(r)=r^n$ and $R_{n+2}^n(r)=\left((n+2)r^2-(n+1)\right)r^n$, otherwise
+\begin{multline*}
+R_n^m(r)=-\frac{n(n+m-2)(n-m-2)}{(n+m)(n-m)(n-2)}R_{n-4}^m(r)+\\
+\frac{2(n-1)(2n(n-2)r^2-m^2-n(n-2))}{(n+m)(n-m)(n-2)}R_{n-2}^m(r).
+\end{multline*}
+Finally, we have the recursive formulae
+\[\cos((n+2)\theta)=2\cos((n+1)\theta)\cos\theta-\cos(n\theta),\]
+\[\sin((n+2)\theta)=2\sin((n+1)\theta)\cos\theta-\sin(n\theta).\]
+We are now ready to redefine the Zernike polynomials in cartesian coordinates.
+
+\section{Main Dish}
+\label{sec:maindish}
+
+Let $x=r\cos\theta$ and $y=r\sin\theta$, we have $r=\sqrt{x^2+y^2}$ and $\tan\theta=y/x$ (with $x<0\iff\theta\in(\pi/2,3\pi/2)$ and $\theta\in[0,2\pi)$).
+
+\subsection{The Irrotational Functions}
+As in \ref{sec:intro}, for $n\geq1$ in full generality,
+\[Z_n^{\pm n}(r,\theta)=r^n\sincos n\theta,\]
+so we have
+\[Z_n^{\pm n}(r,\theta)=2r\cos\theta\cdot r^{n-1}\sincos\big((n-1)\theta\big)-r^2\cdot r^{n-2}\sincos\big((n-2)\theta\big).\]
+Naturally, 
+\[Z_n^{\pm n}(x,y)=2xZ_{n-1}^{\pm(n-1)}-(x^2+y^2)Z_{n-2}^{\pm(n-2)}.\]
+Observe that the equations
+\[Z_n^n(x,y)=\sum_{k=0}^{\left\lfloor\frac n2\right\rfloor}\binom n{2k}(-1)^{n-k}x^{n-2k}y^{2k}\]
+\[Z_n^{-n}(x,y)=\sum_{k=0}^{\left\lfloor\frac{n-1}2\right\rfloor}\binom n{2k+1}(-1)^kx^{n-(2k+1)}y^{2k+1}\]
+both satisfy the recursion formula and the initial conditions for $n=2$ and $n=1$.  When $n=0$, the first equation is correct: $Z_0^{+0}=1$ (instead of $Z_0^{-0}=0$).
+%As in \ref{sec:intro}, $Z_0^0(x,y)=1$, $Z_{-2}^0(x,y)=0$ and
+%\begin{multline*}
+%Z_n^0(x,y)=\frac{2-n}nZ_{n-4}^0(x,y)+\\
+%\frac{2(n-1)(2(x^2+y^2)-1)}nZ_{n-2}^0(x,y).
+%\end{multline*}
+
+\subsection{The Solenoidal Functions}
+As in \ref{sec:intro}, the recursive definition of $R$ holds for $Z$ (when $n$ is held constant).  Observe that the equation
+\[Z_n^0(x,y)=(-1)^{\frac n2}\sum_{k=0}^{\frac n2}\sum_{l=0}^{\frac n2-k}x^{2k}y^{2l}\left\{\begin{array}{cl}1&\text{if }l=k=0\\\frac{-n}{2(k+l)!^2}\binom{k+l}l\left(\frac n2+k+l\right)\prod_{\varsigma=1}^{k+l-1}\varsigma^2-\left(\frac n2\right)^2&\text{otherwise}\end{array}\right.\]
+satisfies both the recursion formula and the initial conditions for $n=0$ and $n=1$.
+
+\end{document}
