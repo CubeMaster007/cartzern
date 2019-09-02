@@ -1,30 +1,10 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% writeLaTeX Example: Academic Paper Template
-%
-% Source: http://www.writelatex.com
-% 
-% Feel free to distribute this example, but please keep the referral
-% to writelatex.com
-% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% How to use writeLaTeX: 
-%
-% You edit the source code here on the left, and the preview on the
-% right shows you the result within a few seconds.
-%
-% Bookmark this page and share the URL with your co-authors. They can
-% edit at the same time!
-%
-% You can upload figures, bibliographies, custom classes and
-% styles using the files menu.
-%
-% If you're new to LaTeX, the wikibook is a great place to start:
-% http://en.wikibooks.org/wiki/LaTeX
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[twocolumn,showpacs,%
+\documentclass[showpacs,%
   nofootinbib,aps,superscriptaddress,%
   eqsecnum,prd,notitlepage,showkeys,10pt]{article}
+
+\addtolength{\oddsidemargin}{-1in}
+\addtolength{\evensidemargin}{-1in}
+\addtolength{\textwidth}{2in}
 
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -50,45 +30,47 @@ We derive formulae for the Zernike polynomials with cartesian coordinate argumen
 
 The Zernike polynomials are a set of scalar valued functions defined on the unit circle.  The set is orthogonal with respect to the standard metric
 \[\langle f,g\rangle=\frac1\pi\int_0^1\int_0^{2\pi}f(r,\theta)g(r,\theta)\;\mathrm d\theta\mathrm dr.\]
-Most indexing schemes define a unique polynomial for each index tuple $(n,m)$ with $n\in\mathbb N$ and $m\in\mathbb Z$ with $|n|\leq m$ and $n\equiv m\pmod2$.  For a given $(n,m)$, we define the Zernike polynomial
+Most indexing schemes define a unique polynomial for each index tuple $(n,m)$ with $n\in\mathbb N$ and $m\in\mathbb Z$ with $|m|\leq n$ and $n\equiv m\pmod2$.  For a given $(n,m)$, we define the Zernike polynomial
 \[Z_n^m(r,\theta)=\left\{\begin{array}{cl}R_n^m(r)\cos m\theta&\text{if }m>0\\R_n^{-m}(r)\sin m\theta&\text{if }m<0\\R_n^0(r)&\text{if }m=0\end{array}\right.\]
-where the radial polynomials $R_n^m$ are defined for $n,m\geq0$ as 
+where the radial polynomials $R_n^m$ are defined for $m\geq0$ as 
 \[R_n^m(r)=\sum_{k=0}^{\frac{n-m}2}(-1)^k\binom{n-k}k\binom{n-2k}{\frac{n-m}2-k}r^{n-2k}.\]
 The radial polynomials are also defined recursively with $R_n^n(r)=r^n$ and $R_{n+2}^n(r)=\left((n+2)r^2-(n+1)\right)r^n$, otherwise
-\begin{multline*}
-R_n^m(r)=-\frac{n(n+m-2)(n-m-2)}{(n+m)(n-m)(n-2)}R_{n-4}^m(r)+\\
-\frac{2(n-1)(2n(n-2)r^2-m^2-n(n-2))}{(n+m)(n-m)(n-2)}R_{n-2}^m(r).
-\end{multline*}
-Finally, we have the recursive formulae
-\[\cos((n+2)\theta)=2\cos((n+1)\theta)\cos\theta-\cos(n\theta),\]
-\[\sin((n+2)\theta)=2\sin((n+1)\theta)\cos\theta-\sin(n\theta).\]
-We are now ready to redefine the Zernike polynomials in cartesian coordinates.
+\[R_n^m(r)=-\frac{n(n+m-2)(n-m-2)}{(n+m)(n-m)(n-2)}R_{n-4}^m(r)+\frac{2(n-1)(2n(n-2)r^2-m^2-n(n-2))}{(n+m)(n-m)(n-2)}R_{n-2}^m(r).\]
+%\[\cos((n+2)\theta)=2\cos((n+1)\theta)\cos\theta-\cos(n\theta),\]
+%\[\sin((n+2)\theta)=2\sin((n+1)\theta)\cos\theta-\sin(n\theta).\]
+We will use expressions for $\sincos\big(n\theta\big)$ as polynomials in $\cos\theta$ to derive explicit and recursive formulae for $Z_n^m$ as polynomials in $x$ and $y$.
 
 \section{Main Dish}
 \label{sec:maindish}
 
-Let $x=r\cos\theta$ and $y=r\sin\theta$, we have $r=\sqrt{x^2+y^2}$ and $\tan\theta=y/x$ (with $x<0\iff\theta\in(\pi/2,3\pi/2)$ and $\theta\in[0,2\pi)$).
+Let $x=r\cos\theta$ and $y=r\sin\theta$, we have $r=\sqrt{x^2+y^2}$.
 
-\subsection{The Irrotational Functions}
-As in \ref{sec:intro}, for $n\geq1$ in full generality,
-\[Z_n^{\pm n}(r,\theta)=r^n\sincos n\theta,\]
-so we have
-\[Z_n^{\pm n}(r,\theta)=2r\cos\theta\cdot r^{n-1}\sincos\big((n-1)\theta\big)-r^2\cdot r^{n-2}\sincos\big((n-2)\theta\big).\]
-Naturally, 
-\[Z_n^{\pm n}(x,y)=2xZ_{n-1}^{\pm(n-1)}-(x^2+y^2)Z_{n-2}^{\pm(n-2)}.\]
-Observe that the equations
-\[Z_n^n(x,y)=\sum_{k=0}^{\left\lfloor\frac n2\right\rfloor}\binom n{2k}(-1)^{n-k}x^{n-2k}y^{2k}\]
-\[Z_n^{-n}(x,y)=\sum_{k=0}^{\left\lfloor\frac{n-1}2\right\rfloor}\binom n{2k+1}(-1)^kx^{n-(2k+1)}y^{2k+1}\]
-both satisfy the recursion formula and the initial conditions for $n=2$ and $n=1$.  When $n=0$, the first equation is correct: $Z_0^{+0}=1$ (instead of $Z_0^{-0}=0$).
-%As in \ref{sec:intro}, $Z_0^0(x,y)=1$, $Z_{-2}^0(x,y)=0$ and
-%\begin{multline*}
-%Z_n^0(x,y)=\frac{2-n}nZ_{n-4}^0(x,y)+\\
-%\frac{2(n-1)(2(x^2+y^2)-1)}nZ_{n-2}^0(x,y).
-%\end{multline*}
+\subsection{Positive $\boldsymbol m$}
+\label{sec:pm}
+Take the formula due to Chebyshev
+\[\cos(m\theta)=\frac m2\sum_{k=0}^{\left\lfloor\frac m2\right\rfloor}\frac{(-1)^k}{m-k}\binom{m-k}k(2\cos\theta)^{m-2k}\]
+and the radial Zernike polynomial formula to define for $m>0$
+\[Z_n^m(x,y)=\frac m2\sum_{\zeta=0}^{\frac{n-m}2}\sum_{\xi=0}^{\left\lfloor\frac m2\right\rfloor}\frac{(-1)^{\zeta+\xi}}{m-\xi}\binom{m-\xi}\xi\binom{n-\zeta}\zeta\binom{n-2\zeta}{\frac{n-m}2-\zeta}(2x)^{m-2\xi}\left(x^2+y^2\right)^{\xi-\zeta+\frac{n-m}2}\]
+By binomial expansion, we have $Z_n^m(x,y)=$
+\[\frac m2\sum_{\zeta=0}^{\frac{n-m}2}\sum_{\xi=0}^{\left\lfloor\frac m2\right\rfloor}\sum_{\varsigma=0}^{\xi-\zeta+\frac{n-m}2}2^{m-2\xi}\frac{(-1)^{\zeta+\xi}}{m-\xi}\binom{m-\xi}\xi\binom{n-\zeta}\zeta\binom{n-2\zeta}{\frac{n-m}2-\zeta}\binom{\xi-\zeta+\frac{n-m}2}\varsigma x^{n-2\zeta-2\varsigma}y^{2\varsigma}\]
+We perform the substitution
+\[\begin{array}{c|c}\zeta'=\zeta+\varsigma&0\leq\zeta'\leq\left\lfloor\frac n2\right\rfloor\\\xi'=\xi&\max\left(0,\zeta'-\frac{n-m}2\right)\leq\xi'\leq\left\lfloor\frac m2\right\rfloor\\\varsigma'=\varsigma&\max\left(0,\zeta'-\frac{n-m}2\right)\leq\varsigma'\leq\zeta'\end{array}\]
+to achieve (variable domains not repeated for brevity) $Z_n^m(x,y)=$
+\[\frac m2\sum_{\zeta'}\sum_{\varsigma'}\sum_{\xi'}2^{m-2\xi'}\frac{(-1)^{\zeta'-\varsigma'+\xi'}}{m-\xi'}\binom{m-\xi'}{\xi'}\binom{n-\zeta'+\varsigma'}{\zeta'-\varsigma'}\binom{n-2\zeta'+2\varsigma'}{\frac{n-m}2-\zeta'+\varsigma'}\binom{\xi'-\zeta'+\varsigma'+\frac{n-m}2}{\varsigma'}x^{n-2\zeta'}y^{2\varsigma'}\]
+The diligent reader will identify a bijection between the sets $\{(\zeta,\xi,\varsigma)\}$ and $\{(\zeta'-\varsigma',\xi',\varsigma')\}$, keeping in mind $\left\lfloor\frac n2\right\rfloor=\frac{n-m}2+\left\lfloor\frac m2\right\rfloor$.
 
-\subsection{The Solenoidal Functions}
-As in \ref{sec:intro}, the recursive definition of $R$ holds for $Z$ (when $n$ is held constant).  Observe that the equation
-\[Z_n^0(x,y)=(-1)^{\frac n2}\sum_{k=0}^{\frac n2}\sum_{l=0}^{\frac n2-k}x^{2k}y^{2l}\left\{\begin{array}{cl}1&\text{if }l=k=0\\\frac{-n}{2(k+l)!^2}\binom{k+l}l\left(\frac n2+k+l\right)\prod_{\varsigma=1}^{k+l-1}\varsigma^2-\left(\frac n2\right)^2&\text{otherwise}\end{array}\right.\]
-satisfies both the recursion formula and the initial conditions for $n=0$ and $n=1$.
+It is clear that for $Z_n^{m>0}(x,y)$, the powers of $x$ are $X=[0,n]\cap\{x\equiv n\pmod2\}$ while the powers of $y$ are $Y=[0,n]\cap\{x\equiv0\pmod2\}$ and that the exponents of $Z$ as a polynomial in $x$ and $y$ are $X\times Y\cap\{(x,y)|x+y\leq n\}$.
+
+\subsection{Negative $\boldsymbol m$}
+We repeat the process from section \ref{sec:pm} for the Zernike polynomials with negative $m$.  Take the formula due to Chebyshev
+\[\sin(m\theta)=\left(\sum_{k=0}^{\left\lfloor\frac{m-1}2\right\rfloor}(-1)^k\binom{m-1-k}k(2\cos\theta)^{m-1-2k}\right)\sin\theta\]
+and the radial Zernike polynomial formula to define for $m>0$
+\[Z_n^{-m}(x,y)=y\sum_{\zeta=0}^{\frac{n-m}2}\sum_{\xi=0}^{\left\lfloor\frac{m-1}2\right\rfloor}(-1)^{\zeta+\xi}\binom{n-\zeta}\zeta\binom{n-2\zeta}{\frac{n-m}2-\zeta}\binom{m-1-\xi}\xi(2x)^{m-1-2\xi}\left(x^2+y^2\right)^{\xi-\zeta+\frac{n-m}2}\]
+By binomial expansion, we have $Z_n^{-m}(x,y)=$
+\[y\sum_{\zeta=0}^{\frac{n-m}2}\sum_{\xi=0}^{\left\lfloor\frac{m-1}2\right\rfloor}\sum_{\varsigma=0}^{\xi-\zeta+\frac{n-m}2}2^{m-1-2\xi}(-1)^{\zeta+\xi}\binom{n-\zeta}\zeta\binom{n-2\zeta}{\frac{n-m}2-\zeta}\binom{m-1-\xi}\xi\binom{\frac{n-m}2-\zeta+\xi}\varsigma x^{n-2\zeta-2\varsigma-1}y^{2\varsigma}\]
+We perform the substitution
+\[\begin{array}{c|c}\zeta'=\zeta+\varsigma&0\leq\zeta'\leq\left\lfloor\frac n2\right\rfloor\\\xi'=\xi&\max\left(0,\zeta'-\frac{n-m}2\right)\leq\xi'\leq\left\lfloor\frac{m-1}2\right\rfloor\\\varsigma'=\varsigma&\max\left(0,\zeta'-\frac{n-m}2\right)\leq\varsigma'\leq\zeta'\end{array}\]
+to achieve (variable domains not repeated for brevity) $Z_n^{-m}(x,y)=$
+\[y\sum_{\zeta'}\sum_{\varsigma'}\sum_{\xi'}2^{m-1-2\xi'}(-1)^{\zeta'-\varsigma'+\xi'}\binom{n-\zeta'+\varsigma'}{\zeta'-\varsigma'}\binom{n-2\zeta'+2\varsigma'}{\frac{n-m}2-\zeta'+\varsigma'}\binom{m-1-\xi'}{\xi'}\binom{\frac{n-m}2-\zeta'+\varsigma'+\xi'}{\varsigma'}x^{n-2\zeta'-1}y^{2\varsigma'}\]
 
 \end{document}
