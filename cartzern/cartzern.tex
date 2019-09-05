@@ -59,7 +59,11 @@ to achieve (variable domains not repeated for brevity) $Z_n^m(x,y)=$
 \[\frac m2\sum_{\zeta'}\sum_{\varsigma'}\sum_{\xi'}2^{m-2\xi'}\frac{(-1)^{\zeta'-\varsigma'+\xi'}}{m-\xi'}\binom{m-\xi'}{\xi'}\binom{n-\zeta'+\varsigma'}{\zeta'-\varsigma'}\binom{n-2\zeta'+2\varsigma'}{\frac{n-m}2-\zeta'+\varsigma'}\binom{\xi'-\zeta'+\varsigma'+\frac{n-m}2}{\varsigma'}x^{n-2\zeta'}y^{2\varsigma'}\]
 The diligent reader will identify a bijection between the sets $\{(\zeta,\xi,\varsigma)\}$ and $\{(\zeta'-\varsigma',\xi',\varsigma')\}$, keeping in mind $\left\lfloor\frac n2\right\rfloor=\frac{n-m}2+\left\lfloor\frac m2\right\rfloor$.
 
-It is clear that for $Z_n^{m>0}(x,y)$, the powers of $x$ are $X=[0,n]\cap\{x\equiv n\pmod2\}$ while the powers of $y$ are $Y=[0,n]\cap\{x\equiv0\pmod2\}$ and that the exponents of $Z$ as a polynomial in $x$ and $y$ are $X\times Y\cap\{(x,y)|x+y\leq n\}$.
+We observe that the set $\zeta'\times\varsigma'$ are the lattice points in an isosceles trapezoid with bases of lengths $\left\lceil\frac{n-1}2\right\rceil$ and $\left\lceil\frac{|m|-1}2\right\rceil$ and angles of $\frac{\pi}4$ and $\frac{3\pi}4$.  We perform the substitution
+\[\begin{array}{cc}\zeta''=\zeta'+\varsigma'&0\leq\zeta''\leq\left\lceil\frac{|m|+1}2\right\rceil\\\xi''=\xi'&\max\left(0,\frac{\zeta''-\varsigma''}2-\frac{n-m}2\right)\leq\xi''\leq\left\lfloor\frac m2\right\rfloor\\\varsigma''=\varsigma'&0\leq\varsigma''\leq\left\lceil\frac{n+1}2\right\rceil-\zeta''\end{array}\]
+to achieve
+\[\sum_{\varsigma''=0}^{\frac{n-|m|}2}\sum_{\zeta''=0}^{\left\lceil\frac{n-1}2\right\rceil-\varsigma''}\]
+\[\frac m2\sum_{\zeta'}\sum_{\varsigma'}\sum_{\xi'}2^{m-2\xi'}\frac{(-1)^{\zeta'-\varsigma'+\xi'}}{m-\xi'}\binom{m-\xi'}{\xi'}\binom{n-\zeta'+\varsigma'}{\zeta'-\varsigma'}\binom{n-2\zeta'+2\varsigma'}{\frac{n-m}2-\zeta'+\varsigma'}\binom{\xi'-\zeta'+\varsigma'+\frac{n-m}2}{\varsigma'}x^{n-2\zeta'}y^{2\varsigma'}\]
 
 \subsection{Negative $\boldsymbol m$}
 We repeat the process from section \ref{sec:pm} for the Zernike polynomials with negative $m$.  Take the formula due to Chebyshev
